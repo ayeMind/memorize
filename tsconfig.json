@@ -7,7 +7,7 @@
     ".plasmo/index.d.ts",
     "./**/*.ts",
     "./**/*.tsx"
-, "api/getDefinition.js", ", "api/getContext.js"api/getPronunciation.js"  ],
+  ],
   "compilerOptions": {
     "paths": {
       "~*": [
