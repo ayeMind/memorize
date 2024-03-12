@@ -16,7 +16,7 @@ app.get('/pronunciation/:word', (req, res) => {
 
     const pronunciationURLs = pronunciationData[word];
     if (!pronunciationURLs) {
-        return res.status(404).json({ error: 'Произношение для данного слова не найдено' });
+        return res.status(404).json(null);
     }
 
     const amazonawsURL = pronunciationURLs.find(url => url.includes('amazonaws'));
@@ -33,7 +33,7 @@ app.get('/pronunciation/:word', (req, res) => {
     }
 
     // Остальные ссылки, в основном, сломанные
-    return res.json("not found");
+    return res.json(null);
 });
 
 const PORT = 3000;
