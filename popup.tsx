@@ -4,20 +4,32 @@ import { useState } from "react"
 
 import { getWordDefinition } from "~api/getDefinition"
 import { getWordPronunciation } from "~api/getPronunciation"
+import { getWordContext } from "~api/getContext"
+
 
 function IndexPopup() {
   const [value, setValue] = useState("")
   const [pronunciationUrl, setPronunciationUrl] = useState("")
   const [transcription, setTranscription] = useState("")
   const [definition, setDefinition] = useState("")
+  const [context, setContext] = useState("")
 
   const handleGetInfo = async (e) => {
+    setPronunciationUrl("");
+    setTranscription("");
+    setContext("");
+    setDefinition("");
+    
     const url = await getWordPronunciation(value)
     setPronunciationUrl(url)
 
     const wordData = await getWordDefinition(value)
     setTranscription(wordData[0].phonetic)
     setDefinition(wordData[0].meanings[0].definitions[0].definition)
+
+    const contextData = await getWordContext(value)
+    setContext(contextData[0].source)
+  
   }
 
   const onKeyDown = async (e) => {  
@@ -47,10 +59,15 @@ function IndexPopup() {
         <div className="flex flex-col gap-2 mt-2">
           <p className="text-[18px]">Phonetics: {transcription}</p>
           <p className="text-[18px]">Definition: {definition}</p>
+          {context ? (
+            <p className="text-[18px]">Context: {context}</p>
+          ): ''}
+          <button className="p-2 text-[18px] bg-slate-200 rounded-lg hover:bg-slate-300 transition-colors">Add to cards</button>
         </div>
       ) : (
         ""
       )}
+      
     </div>
   )
 }

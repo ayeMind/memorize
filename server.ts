@@ -2,7 +2,11 @@ const express = require('express');
 const app = express();
 const fs = require('fs');
 
-const pronunciationData = JSON.parse(fs.readFileSync('pronunciation.json', 'utf-8'));
+
+const Reverso = require('reverso-api')
+const reverso = new Reverso()
+
+const pronunciationData = JSON.parse(fs.readFileSync('api/pronunciation.json', 'utf-8'));
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -34,6 +38,22 @@ app.get('/pronunciation/:word', (req, res) => {
 
     // Остальные ссылки, в основном, сломанные
     return res.json(null);
+});
+
+
+
+app.get('/context/:word', (req, res) => {
+    const word = req.params.word;    
+    reverso.getContext(
+        word,
+        'english',
+        'russian',
+        (err, response) => {
+            if (err) throw new Error(err.message)
+            console.log(response);
+            return res.json(response.examples)
+        }
+    )
 });
 
 const PORT = 3000;
