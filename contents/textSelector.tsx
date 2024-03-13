@@ -1,5 +1,3 @@
-export {}
-
 import IndexPopup from "~popup";
 import { createRoot } from "react-dom/client"
 
@@ -24,7 +22,7 @@ document.addEventListener('selectionchange', function() {
         
         const iconContainer = document.createElement('div');
         iconContainer.className = "extension-icon-container-memorize"
-        iconContainer.style.position = "absolute";
+        iconContainer.style.position = "fixed";
         iconContainer.style.width = "20px";
         iconContainer.style.height = "20px";
         iconContainer.style.padding = "0px";
@@ -41,13 +39,14 @@ document.addEventListener('selectionchange', function() {
         icon.style.margin = "0px";
         icon.style.backgroundColor = "#ff323f";
         icon.style.cursor = 'pointer';
-        icon.role = 'button';        
+        icon.role = 'button';     
+        icon.type = 'button'; 
         icon.disabled = false;
     
 
         const selectionRect = window.getSelection().getRangeAt(0).getBoundingClientRect();
-        iconContainer.style.top = (selectionRect.top + window.scrollY) + 'px';
-        iconContainer.style.left = (selectionRect.right + window.scrollX) + 'px';
+        iconContainer.style.top = selectionRect.top + 'px';
+        iconContainer.style.left = selectionRect.right + 'px';
 
      
 
@@ -87,3 +86,5 @@ document.addEventListener("popup", ()=>{
     const root = createRoot(iconContainer)
     root.render(<IndexPopup />)
 })
+
+export {}
