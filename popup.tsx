@@ -40,29 +40,29 @@ function IndexPopup() {
 
   return (
     <div className="p-5" onKeyDown={onKeyDown}>
-      <div className="flex gap-2 text-[20px] ">
+      <div className="flex gap-2 text-[20px]">
         <input
-          value={value}
+          value={value.trim()}
           onChange={(e) => setValue(e.target.value)}
-          className="px-2 text-white bg-slate-700"
+          className="w-64 px-2 text-white rounded-md bg-slate-700"
           placeholder="word"
         />
-        <button onClick={handleGetInfo}>Get</button>
+        <button onClick={handleGetInfo} className="text-black">Get</button>
       </div>
 
       <div className="mt-4">
         {pronunciationUrl && (
-          <audio className="mt-2" controls src={pronunciationUrl} />
+          <audio className="mt-2 w-72" controls src={pronunciationUrl} />
         )}
       </div>
       {definition ? (
-        <div className="flex flex-col gap-2 mt-2">
-          <p className="text-[18px]">Phonetics: {transcription}</p>
-          <p className="text-[18px]">Definition: {definition}</p>
+        <div className="flex flex-col gap-2 mt-2 w-72">
+          <p className="text-[18px] text-black m-0">Phonetics: {transcription}</p>
+          <p className="text-[18px] text-black m-0">Definition: {definition}</p>
           {context ? (
-            <p className="text-[18px]">Context: {context}</p>
+            <p className="text-[18px] text-black m-0">Context: {context}</p>
           ): ''}
-          <button className="p-2 text-[18px] bg-slate-200 rounded-lg hover:bg-slate-300 transition-colors">Add to cards</button>
+          <button className="p-2 w-72 text-black text-[18px] bg-slate-200 rounded-lg hover:bg-slate-300 transition-colors m-0">Add to cards</button>
         </div>
       ) : (
         ""

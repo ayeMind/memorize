@@ -15,7 +15,7 @@ document.addEventListener('selectionchange', function() {
         console.log(selectedText);
         
 
-        const icon = document.createElement('div');
+        const icon = document.createElement('button');
         icon.className = "extension-icon-memorize"
         icon.style.position = "absolute";
         icon.style.padding = "10px";
@@ -25,20 +25,24 @@ document.addEventListener('selectionchange', function() {
         icon.style.top = (selectionRect.top + window.scrollY) + 'px';
         icon.style.left = (selectionRect.right + window.scrollX) + 'px';
 
-        const popup = document.createElement('div')
-        popup.className = "extension-icon-memorize";
-        popup.style.position = "absolute";
-        popup.style.padding = "20px";
-        popup.style.backgroundColor = "#FFFFFF";
 
+        // const popup = document.createElement('div')
+        // popup.className = "extension-icon-memorize";
+        // popup.style.position = "absolute";
+        // popup.style.padding = "20px";
+        // popup.style.backgroundColor = "#FFFFFF";
 
         document.body.appendChild(icon);
 
         icon.addEventListener('click', function() {
-            popup.style.top = icon.style.top;
-            popup.style.left = icon.style.left;
+            icon.disabled = true;
+            // popup.style.top = icon.style.top;
+            // popup.style.left = icon.style.left;
 
-            document.body.appendChild(popup)
+            // document.body.appendChild(popup)
+
+            const event = new Event("popup")
+            document.dispatchEvent(event)
         });
     }
 });
