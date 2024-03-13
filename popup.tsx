@@ -19,7 +19,7 @@ function IndexPopup() {
     setTranscription("");
     setContext("");
     setDefinition("");
-    
+     
     const url = await getWordPronunciation(value)
     setPronunciationUrl(url)
 
@@ -29,7 +29,7 @@ function IndexPopup() {
 
     const contextData = await getWordContext(value)
     setContext(contextData[0].source)
-  
+    
   }
 
   const onKeyDown = async (e) => {  
