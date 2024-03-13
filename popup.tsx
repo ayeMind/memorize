@@ -1,6 +1,6 @@
 import "index.css"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import { getWordDefinition } from "~api/getDefinition"
 import { getWordPronunciation } from "~api/getPronunciation"
@@ -14,36 +14,57 @@ function IndexPopup() {
   const [definition, setDefinition] = useState("")
   const [context, setContext] = useState("")
 
-  const handleGetInfo = async (e) => {
+  const handleGetInfo = async () => {
+
+    let word = localStorage.getItem("word");
+    if (value) {
+      word = value;
+    } else {
+      word = word.trim().toLowerCase();
+    }
+
+    console.log(word);
+    
+    
     setPronunciationUrl("");
     setTranscription("");
     setContext("");
     setDefinition("");
-     
-    const url = await getWordPronunciation(value)
+    
+    const url = await getWordPronunciation(word)
     setPronunciationUrl(url)
 
-    const wordData = await getWordDefinition(value)
+    const wordData = await getWordDefinition(word)
     setTranscription(wordData[0].phonetic)
     setDefinition(wordData[0].meanings[0].definitions[0].definition)
 
-    const contextData = await getWordContext(value)
+    const contextData = await getWordContext(word)
     setContext(contextData[0].source)
     
   }
 
   const onKeyDown = async (e) => {  
     if (e.key === 'Enter') {
-      handleGetInfo(value)
+      handleGetInfo()
     }
   }
 
+  useEffect(()=>{
+    const word = localStorage.getItem("word");
+    if (word) {
+      setValue(word.trim().toLowerCase());
+      handleGetInfo();
+    }
+
+    
+  }, [])
+
   return (
-    <div className="p-5" onKeyDown={onKeyDown}>
-      <div className="flex gap-2 text-[20px]">
+    <div className="p-5 bg-white" onKeyDown={onKeyDown}>
+      <div className="flex gap-2 text-[20px] ">
         <input
-          value={value.trim()}
-          onChange={(e) => setValue(e.target.value)}
+          value={value}
+          onChange={(e) => setValue(e.target.value.trim().toLowerCase())}
           className="w-64 px-2 text-white rounded-md bg-slate-700"
           placeholder="word"
         />
