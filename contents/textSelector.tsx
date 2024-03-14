@@ -4,6 +4,14 @@ import { createRoot } from "react-dom/client"
 let selectedText = '';
 
 document.addEventListener('selectionchange', function() {
+
+    const popup = document.querySelector('.extension-icon-container-memorize')
+    const icon = document.querySelector('.extension-icon-memorize')
+
+    if (popup && !icon) {
+        return;
+    }
+   
     selectedText = window.getSelection().toString().trim();
 
     // const icon = document.querySelector(".extension-icon-memorize");
@@ -53,31 +61,35 @@ document.addEventListener('selectionchange', function() {
         iconContainer.style.top = selectionRect.top + 'px';
         iconContainer.style.left = selectionRect.right + 'px';
 
-     
-
-
-        // const popup = document.createElement('div')
-        // popup.className = "extension-icon-memorize";
-        // popup.style.position = "absolute";
-        // popup.style.padding = "20px";
-        // popup.style.backgroundColor = "#FFFFFF";
 
         iconContainer.appendChild(icon);
         document.body.appendChild(iconContainer);
 
-        icon.addEventListener('click', function() {
+        icon.addEventListener('click', function(event) {
+            
+            event.stopPropagation();
             icon.remove()
-            // popup.style.top = icon.style.top;
-            // popup.style.left = icon.style.left;
-
-            // document.body.appendChild(popup)
-
-            const event = new Event("popup")
-            document.dispatchEvent(event)
+            const popupEvent = new Event("popup")
+            document.dispatchEvent(popupEvent)
     
         });
     }
 });
+
+
+document.addEventListener("click", (e)=>{
+    const target = e.target as Node;
+    const popupContainer = document.querySelector(".extension-icon-container-memorize");
+
+    if (target == popupContainer || popupContainer.contains(target)) {
+        return;
+    } else if (popupContainer.querySelector(".extension-icon-memorize")) {
+        return;
+    } else {
+        popupContainer.remove()
+    }
+     
+})
 
 
 document.addEventListener("popup", ()=>{
