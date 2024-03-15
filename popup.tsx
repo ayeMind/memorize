@@ -65,7 +65,7 @@ function IndexPopup() {
   }
 
   return (
-    <div className="p-5 bg-white" onKeyDown={onKeyDown}>
+    <div className="visible block p-5 bg-white opacity-100" onKeyDown={onKeyDown}>
       <div className="flex gap-2 text-[20px] ">
         <input
           value={value}
