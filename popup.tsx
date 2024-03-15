@@ -47,6 +47,34 @@ function IndexPopup() {
     if (!value) {
       return
     }
+
+    // supabase check if login
+    const { data, error } = await supabase.auth.getSession()
+
+    if (error) {
+      console.error(error)
+      return
+    }
+
+    if (!data.session) {
+      return
+    }
+
+    const { user } = data.session
+    const userId = user.id
+
+    // get words table 
+    const { data: wordsData, error: wordsError } = await supabase
+      .from("words")
+      .select("*")
+      .eq("user_id", user.id)
+
+      if (wordsError) {
+        console.error(wordsError)
+        return
+      }
+
+      // if row with current user id doesn't exist
     
   }
 
@@ -85,6 +113,7 @@ function IndexPopup() {
         <button onClick={handleGetInfo} className="text-black">
           Get
         </button>
+        
       </div>
 
       <div className="mt-4">
@@ -132,6 +161,8 @@ function IndexPopup() {
       ) : (
         ""
       )}
+
+  
 
       {chrome.runtime.openOptionsPage ? (
         <button

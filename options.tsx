@@ -68,6 +68,9 @@ function IndexOptions() {
         alert("Signup successful, confirmation mail should be sent soon!")
       } else {
         setUser(user)
+        const { data, error } = await supabase
+          .from("words")
+          .insert({ user_id: user.id, words: [] })
       }
     } catch (error) {
       console.log("error", error)
