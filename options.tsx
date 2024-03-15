@@ -14,8 +14,9 @@ function IndexOptions() {
     key: "user",
     instance: new Storage({
       area: "local"
-    })
+    })  
   })
+
 
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
@@ -30,6 +31,7 @@ function IndexOptions() {
       }
       if (!!data.session) {
         setUser(data.session.user)
+
         sendToBackground({
           name: "init-session",
           body: {
