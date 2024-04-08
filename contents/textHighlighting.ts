@@ -4,6 +4,10 @@ export {}
 
 console.log("Hello!")
 
+function handleClick() {
+  console.log("Clicked!")
+}
+
 const highlightWord = (word: string) => {
   const page = document.querySelector("body")
   const text = page.innerHTML
@@ -11,10 +15,14 @@ const highlightWord = (word: string) => {
   if (regex.test(text)) {
     const newText = text.replace(
       regex,
-      "<span class='extension-word-memorize'>$1</span>"
+      `<span class='extension-word-memorize'>$1</span>`
     )
     page.innerHTML = newText
   }
+  const highlightedWords = document.querySelectorAll(".extension-word-memorize")
+  highlightedWords.forEach((word) => {
+    word.addEventListener("click", handleClick)
+  })
 }
 
 interface Data {
