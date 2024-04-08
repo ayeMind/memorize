@@ -82,6 +82,7 @@ document.addEventListener("selectionchange", function () {
       .getSelection()
       .getRangeAt(0)
       .getBoundingClientRect()
+
     iconContainer.style.top = selectionRect.top + "px"
     iconContainer.style.left = selectionRect.right + "px"
 
@@ -120,6 +121,19 @@ document.addEventListener("popup", () => {
 
   iconContainer.style.width = "auto"
   iconContainer.style.height = "auto"
+
+    // depending on which is closer
+    if (window.innerWidth - iconContainer.getBoundingClientRect().right < 400) {
+        iconContainer.style.left = window.innerWidth - 400 + "px"
+    } else {
+        iconContainer.style.left = iconContainer.style.left
+    }
+
+    if (window.innerHeight - iconContainer.getBoundingClientRect().bottom < 512) {
+        iconContainer.style.top = window.innerHeight - 512 + "px"
+    } else {
+        iconContainer.style.top = iconContainer.style.top
+    }
 
   localStorage.setItem("word", selectedText)
   const root = createRoot(iconContainer)
