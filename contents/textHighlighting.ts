@@ -17,9 +17,13 @@ const highlightWord = (word: string) => {
   }
 }
 
+interface Data {
+  words: string[]
+}
+
 getMyWords().then(data => {
   console.log(data);
-  data.words.forEach((word) => {
+  (data as Data).words.forEach((word) => {
     console.log('highlight', word);
     highlightWord(word)
 })

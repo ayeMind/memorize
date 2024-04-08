@@ -47,9 +47,8 @@ function IndexPopup() {
 
 
   const handleAddToCards = async () => {
-    console.log("add card ", value);
-    
     addCard(value).then(data => console.log(data));
+    document.querySelector(".popup").remove();
   }
 
   const onKeyDown = async (e) => {
@@ -68,7 +67,7 @@ function IndexPopup() {
 
   return (
     <div
-      className="visible block p-5 w-[340px] bg-[#232323] opacity-100"
+      className="popup visible block p-5 w-[340px] bg-[#232323] opacity-100"
       onKeyDown={onKeyDown}>
       <div className="flex gap-2 text-[20px] mb-2">
         <input

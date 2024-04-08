@@ -28,6 +28,11 @@ if (existingError) {
 
 if (existingData && existingData.length > 0) {
   // Если строчка уже существует
+
+  if (existingData[0].words.includes(word)) {
+    return
+  }
+
   const updatedWords = [...existingData[0].words, word]
 
   const { data: updateData, error: updateError } = await supabase
