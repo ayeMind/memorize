@@ -1,3 +1,5 @@
+import { getMyWords } from "~api/getMyWords"
+
 export {}
 
 console.log("Hello!")
@@ -15,12 +17,21 @@ const highlightWord = (word: string) => {
   }
 }
 
-// highlightWord("")
+getMyWords().then(data => {
+  console.log(data);
+  data.words.forEach((word) => {
+    console.log('highlight', word);
+    highlightWord(word)
+})
+})
+
 
 const style = `
     .extension-word-memorize {
-        text-shadow: 1px 1px #ffe2e7;
+        text-shadow: 0px 0px #e2e;
         cursor: pointer;
+        font-weight: 400;
+        font-style: italic;
     }
 `
 
