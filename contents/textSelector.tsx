@@ -20,7 +20,6 @@ document.addEventListener("selectionchange", function () {
   // }
 
   if (selectedText !== "") {
-    console.log(selectedText)
 
     const prevContainer = document.querySelector(
       ".extension-icon-container-memorize"
@@ -83,8 +82,8 @@ document.addEventListener("selectionchange", function () {
       .getRangeAt(0)
       .getBoundingClientRect()
 
-    iconContainer.style.top = selectionRect.top + "px"
-    iconContainer.style.left = selectionRect.right + "px"
+    iconContainer.style.top = selectionRect.top - 32 + "px"
+    iconContainer.style.left = selectionRect.right + 16 + "px"
 
     iconContainer.appendChild(icon)
     document.body.appendChild(iconContainer)
@@ -104,17 +103,20 @@ document.addEventListener("click", (e) => {
     ".extension-icon-container-memorize"
   )
 
+  const icon = document.querySelector(".extension-icon-memorize")
+
   if (target == popupContainer || popupContainer && popupContainer.contains(target)) {
     return
-  } else if (popupContainer && popupContainer.querySelector(".extension-icon-memorize")) {
+  } else if (selectedText && icon) {
     return
   } else if (popupContainer) {
     popupContainer.remove()
+  } else if (icon) {
+    icon.remove()
   }
 })
 
 document.addEventListener("popup", () => {
-  console.log("popup!")
   const iconContainer = document.querySelector(
     ".extension-icon-container-memorize"
   ) as HTMLDivElement
@@ -129,9 +131,9 @@ document.addEventListener("popup", () => {
         iconContainer.style.left = iconContainer.style.left
     }
 
-    if (window.innerHeight - iconContainer.getBoundingClientRect().bottom < 512) {
-        iconContainer.style.top = window.innerHeight - 512 + "px"
-    } else {
+    if (window.innerHeight - iconContainer.getBoundingClientRect().bottom < 624) {
+        iconContainer.style.top = window.innerHeight - 624 + "px"
+    } else {  
         iconContainer.style.top = iconContainer.style.top
     }
 
