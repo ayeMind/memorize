@@ -1,4 +1,4 @@
-# xMemorize
+# Memorize
 
 This is an extension that allows you to learn new English words passively. At any time, you can select an unfamiliar word on the page and see its definition, synonyms, and context.
 

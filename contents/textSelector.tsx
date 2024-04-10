@@ -13,12 +13,7 @@ document.addEventListener("selectionchange", function () {
   }
 
   selectedText = window.getSelection().toString().trim()
-
-  // const icon = document.querySelector(".extension-icon-memorize");
-  // if (icon) {
-  //     icon.remove()
-  // }
-
+  
   if (selectedText !== "") {
 
     const prevContainer = document.querySelector(

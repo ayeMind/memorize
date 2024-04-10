@@ -24,10 +24,8 @@ function handleClick(e) {
     popup.remove()
   })
 
-  // depending on which is closer
-
   const word = e.target.textContent
-  // card popup should be displayed near the word
+
   const left = (window.innerWidth - e.clientX < 400) ? window.innerWidth - 400 : e.clientX
   const top =  (window.innerHeight - e.clientY < 512) ? window.innerHeight - 512 : e.clientY
 
