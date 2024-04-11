@@ -74,7 +74,7 @@ app.get('/synonyms/:word', (req, res) => {
                     return res.status(500).send('Ошибка сервера');
                 }
                 console.log(response);
-                return res.json(response.synonyms.slice(0, 10));
+                return res.json(response.synonyms.slice(0, 15));
             }
         );
     } catch (error) {
