@@ -1,6 +1,8 @@
 import { getMyWords } from "~api/getMyWords"
 import { CardPopup } from "~components/card-popup"
 import { createRoot } from "react-dom/client"
+import { getWord } from "~api/getWord"
+import type { Card } from "~interfaces"
 
 document.addEventListener("click", (e) => {
   const target = e.target as Node
@@ -16,7 +18,7 @@ document.addEventListener("click", (e) => {
 })
 
 
-function handleClick(e) {
+async function handleClick(e) {
 
   e.stopPropagation()
   const popups = document.querySelectorAll(".memorize-card-popup")
@@ -34,7 +36,10 @@ function handleClick(e) {
   popup.style.left = `${left}px`
   popup.style.top = `${top}px`
   document.body.appendChild(popup)
-  createRoot(popup).render(<CardPopup word={word} />)
+  const wordInfo = await getWord(word) as Card
+  console.log("wordinfo", wordInfo);
+  
+  createRoot(popup).render(<CardPopup {...wordInfo} />)
 }
 
 const highlightWord = (word: string) => {
@@ -54,12 +59,9 @@ const highlightWord = (word: string) => {
   })
 }
 
-interface Data {
-  words: string[]
-}
 
 getMyWords().then(data => {
-  (data as Data).words.forEach((word) => {
+  (data as string[]).forEach((word) => {
     highlightWord(word)
 })
 })

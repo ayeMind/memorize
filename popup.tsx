@@ -7,6 +7,8 @@ import { getWordPronunciation } from "~api/getPronunciation"
 import { AudioBlock } from "~components/audio-block"
 import { InfoBlock } from "~components/info-block"
 import { addCard } from "~api/addCard"
+import { getWordTranslation } from "~api/getTranslation"
+import { getWordSynonyms } from "~api/getSynonyms"
 
 
 function IndexPopup() {
@@ -14,8 +16,12 @@ function IndexPopup() {
   const [pronunciationUrl, setPronunciationUrl] = useState("")
   const [transcription, setTranscription] = useState("")
   const [definition, setDefinition] = useState("")
+  const [translation, setTranslation] = useState("")
   const [context, setContext] = useState("")
   const [contextList, setContextList] = useState([])
+  const [synonyms, setSynonums] = useState([])
+
+  const [showTranslation, setShowTranslation] = useState(false)
 
 
   const handleGetInfo = async () => {
@@ -32,7 +38,12 @@ function IndexPopup() {
     setTranscription("")
     setContext("")
     setDefinition("")
+    setTranslation("")
+    setSynonums([])
 
+    const translateData = await getWordTranslation(word)
+    setTranslation(translateData)    
+    
     const url = await getWordPronunciation(word)
     setPronunciationUrl(url)
 
@@ -43,11 +54,24 @@ function IndexPopup() {
     const contextData = await getWordContext(word)
     setContext(contextData[0].source)
     setContextList(contextData)
+    
+    const synonymsData = await getWordSynonyms(word)
+    setSynonums(synonymsData.map(data => data.synonym))    
   }
 
-
   const handleAddToCards = async () => {
-    addCard(value).then(data => console.log(data));
+    const data = {
+      word: value,
+      definition: definition,
+      transcription: transcription,
+      translation: translation,
+      pronunciationUrl: pronunciationUrl,
+      context: contextList,
+      synonyms: synonyms
+    }
+    console.log("DATA!", data);
+    
+    addCard(data).then(data => console.log(data));
     document.querySelector(".popup").remove();
   }
 
@@ -64,6 +88,12 @@ function IndexPopup() {
       handleGetInfo()
     }
   }, [])
+
+  const toggleShow = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setShowTranslation(prev => !prev)
+  }
 
   return (
     <div
@@ -101,15 +131,23 @@ function IndexPopup() {
           ) : (
             ""
           )}
+         
+        </div>
+      ) : (
+        ""
+      )}
+        <div className="flex flex-col items-center w-full">
+          {!showTranslation && value && (
+            <button type="button" onClick={toggleShow} className="mt-4 text-[#A99BFF]">Show translation</button>
+          )}
+          {showTranslation && value && (
+            <p className="mt-4 text-[#f5f5f5]">{translation}</p>
+          )}
           <button className="py-2 px-4 text-[#f5f5f5] text-[18px] bg-[#6013DD] rounded-lg hover:opacity-80 transition-colors mt-4 mx-0"
                   onClick={handleAddToCards}>
             Add to cards
           </button>
         </div>
-      ) : (
-        ""
-      )}
-
   
 
       {chrome.runtime.openOptionsPage ? (

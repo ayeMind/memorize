@@ -1,6 +1,6 @@
 import { supabase } from "~core/supabase"
 
-export const getMyWords = async () => {
+export const getWord = async (word: string) => {
   const { data, error } = await supabase.auth.getSession()
 
   if (error) {
@@ -27,8 +27,9 @@ export const getMyWords = async () => {
   }
 
   if (existingData && existingData.length > 0) {
-    return existingData[0].words.map(data => data.word)
+    const wordInfo = existingData[0].words.filter(wordInfo => wordInfo.word == word)[0]
+    return wordInfo
   } else {
-    return []
+    return {}
   }
 }

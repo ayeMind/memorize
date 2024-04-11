@@ -1,6 +1,6 @@
 import { supabase } from "~core/supabase"
 
-export const addCard = async (word: string) => {
+export const addCard = async (props) => {
     const { data, error } = await supabase.auth.getSession()
     
     if (error) {
@@ -29,11 +29,12 @@ if (existingError) {
 if (existingData && existingData.length > 0) {
   // Если строчка уже существует
 
-  if (existingData[0].words.includes(word)) {
+  const existingWords = existingData[0].words.map(elem => elem.word)
+  if (existingWords.includes(props.word)) {
     return
   }
 
-  const updatedWords = [...existingData[0].words, word]
+  const updatedWords = [...existingData[0].words, props]
 
   const { data: updateData, error: updateError } = await supabase
     .from('words')
@@ -49,7 +50,7 @@ if (existingData && existingData.length > 0) {
   // Если строчки нет
   const { data: insertData, error: insertError } = await supabase
     .from('words')
-    .insert({ user_id: userId, words: [word] })
+    .insert({ user_id: userId, words: [props] })
 
   if (insertError) {
     console.error('Error inserting new row:', insertError)

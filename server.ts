@@ -62,6 +62,47 @@ app.get('/context/:word', (req, res) => {
     }
 });
 
+app.get('/synonyms/:word', (req, res) => {
+    try {
+        const word = req.params.word;
+        reverso.getSynonyms(
+            word,
+            'english',
+            (err, response) => {
+                if (err) {
+                    console.error('Ошибка при запросе контекста:', err.message);
+                    return res.status(500).send('Ошибка сервера');
+                }
+                console.log(response);
+                return res.json(response.synonyms.slice(0, 10));
+            }
+        );
+    } catch (error) {
+        console.error('Ошибка во время обработки запроса на получение контекста:', error.message);
+        return res.status(500).send('Ошибка сервера');
+    }
+});
+
+
+app.get('/translate/:word', (req, res) => {
+    try {
+        const word = req.params.word;
+        reverso.getTranslation(
+            word,
+            'english',
+            'russian',
+            (err, response) => {
+                if (err) throw new Error(err.message)
+                console.log(response) 
+                return response
+            }
+        )   
+    } catch (error) {
+        console.error('Ошибка во время обработки запроса на получение перевода:', error.message);
+        return res.status(500).send('Ошибка сервера');
+    }
+})
+
 const PORT = 3000;
 
 function startServer() {
