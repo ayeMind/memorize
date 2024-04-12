@@ -72,7 +72,7 @@ function IndexPopup() {
     console.log("DATA!", data);
     
     addCard(data).then(data => console.log(data));
-    document.querySelector(".popup").remove();
+    document.querySelector(".popup-extension").remove();
   }
 
   const onKeyDown = async (e) => {
@@ -97,16 +97,16 @@ function IndexPopup() {
 
   return (
     <div
-      className="popup visible block p-5 w-[340px] bg-[#232323] opacity-100"
+      className="m-0 popup-extension visible block p-5 w-[340px] bg-[#232323] opacity-100"
       onKeyDown={onKeyDown}>
       <div className="flex gap-2 text-[20px] mb-2">
         <input
           value={value}
           onChange={(e) => setValue(e.target.value.trim().toLowerCase())}
-          className="w-64 px-2 text-[#f5f5f5] rounded-md bg-[#414141]"
+          className="w-64 h-auto px-2 py-1 text-[16px] text-[#f5f5f5] rounded-md bg-[#414141]"
           placeholder="word"
         />
-        <button onClick={handleGetInfo} className="text-[#ffffff] bg-[#7e7e7e] rounded-md px-2 py-1 text-[16px] hover:opacity-80">
+        <button onClick={handleGetInfo} className="text-[#ffffff] bg-[#7e7e7e] h-auto rounded-md px-2 py-1 text-[16px] hover:opacity-80">
           Get
         </button>
         

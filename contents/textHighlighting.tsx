@@ -71,7 +71,6 @@ const style = `
     .extension-word-memorize {
         text-shadow: 0px 0px 5px #e2e;
         cursor: pointer;
-        font-weight: 400;
     }
 `
 

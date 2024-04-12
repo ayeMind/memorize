@@ -1,6 +1,6 @@
 import "index.css"
 
-import type { Provider, User } from "@supabase/supabase-js"
+import type { User } from "@supabase/supabase-js"
 import { useEffect, useState } from "react"
 
 import { sendToBackground } from "@plasmohq/messaging"
@@ -8,6 +8,9 @@ import { Storage } from "@plasmohq/storage"
 import { useStorage } from "@plasmohq/storage/hook"
 
 import { supabase } from "~core/supabase"
+import { Switch } from "~components/switch"
+import { changeSettings } from "~api/changeSettings"
+import { getSettings } from "~api/getSettings"
 
 function IndexOptions() {
   const [user, setUser] = useStorage<User>({
@@ -21,7 +24,22 @@ function IndexOptions() {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
 
+  const [settings, setSettings] = useState<any>({
+    "bold": false,
+    "cursive": false,
+    "color": "#ff22ff",
+    "card-prefer": "Definition"
+  })
+
   useEffect(() => {
+
+    getSettings().then(data => {
+      console.log(data, "DATAA");
+      setSettings(data)
+    }).catch(
+      err => console.error(err)
+    )
+    
     async function init() {
       const { data, error } = await supabase.auth.getSession()
 
@@ -78,36 +96,74 @@ function IndexOptions() {
     }
   }
 
-  const handleOAuthLogin = async (provider: Provider, scopes = "email") => {
-    await supabase.auth.signInWithOAuth({
-      provider,
-      options: {
-        scopes,
-        redirectTo: location.href
-      }
-    })
+  const handleSaveOptions = (e) => {
+    const form = document.querySelector(".settings-extension") as HTMLFormElement
+    
+    e.preventDefault()
+
+    const fields = []
+    const data = new FormData(form)
+    for (let [key, value] of data.entries()) {
+      fields.push({"key": key, "value": value})
+    }
+
+    const request = {
+      "bold": fields.some(data => data.key === "bold"),
+      "cursive": fields.some(data => data.key === "cursive"),
+      "color": fields.find(data => data.key === "color").value,
+      "card-prefer": fields.find(data => data.key === "card-prefer").value
+    }
+    
+    changeSettings(request).catch(error => console.error(error))
   }
 
+  const defaultColor = (settings["color"] ? settings["color"] : "#ee22ee")
+
   return (
-    <main className="flex items-center justify-center h-screen">
-      <div className="flex flex-col items-center gap-4 p-8 bg-gray-200 rounded-lg w-[350px]">
+    <main className="flex items-center justify-center h-screen font-[Quicksand] text-[20px]">
         {(user && user.confirmed_at) && (
-          <>
-            <h3>
-              {user.email} - {user.id}
-            </h3>
+          <div className="flex flex-col items-center">
+            <form className="flex flex-col items-center w-screen h-screen gap-4 p-8 settings-extension" onSubmit={handleSaveOptions}>
+            <h1 className="text-[32px]">Settings</h1>
+              <div className="w-[512px] p-4 bg-cyan-950 rounded text-[#f2f2f2]">
+                <h2>Highlighting words on a page</h2>
+                <div className="flex flex-col gap-4 mt-4">
+                  <Switch defaultValue={settings["bold"]} name="bold" text="Bold" onChange={() => {}} />
+                  <Switch defaultValue={settings["cursive"]} name="cursive" text="Cursive" onChange={() => {}} />
+                  <div className="flex gap-2">
+                    <input name="color" defaultValue={defaultColor} className="rounded-xl p-1 w-[60px] h-[34px] bg-[#ccc]" type="color" />
+                    <label>Text shadow color</label>
+                  </div>
+                </div>
+              </div>
+
+              <div className="w-[512px] p-4 bg-cyan-950 rounded text-[#f2f2f2]">
+                <h2>What do you want to see on the card first?</h2>
+                <select defaultValue={settings["card-prefer"]} name="card-prefer" className="bg-[#ccc] text-black px-2 rounded mt-4">
+                  <option value="Definition">Definition</option>
+                  <option value="Examples">Examples</option>
+                  <option value="Synonyms">Synonyms</option>
+                </select>              
+              </div>
+
+            <button className="p-2 bg-blue-600 text-[#f2f2f2] rounded btn hover:bg-blue-700">Save changes
+            </button>
+
+            </form>
+
+            
             <button
               onClick={() => {
                 supabase.auth.signOut()
                 setUser(null)
               }}
-              className="px-4 py-2 text-white bg-red-500 rounded btn hover:bg-red-600">
+              className="fixed px-4 py-2 text-white bg-red-500 rounded bottom-6 btn hover:bg-red-600">
               Logout
             </button>
-          </>
+          </div>
         )}
         {(user && !user.confirmed_at) && (
-          <>
+          <div className="flex flex-col items-center gap-4 p-8 bg-gray-200 rounded-lg w-[350px]">
             <h3>
               Please confirm your email to continue. Confirmation mail should be
               sent soon!
@@ -120,10 +176,10 @@ function IndexOptions() {
               className="px-4 py-2 text-white bg-red-500 rounded btn hover:bg-red-600">
               Logout
             </button>
-          </>
+          </div>
         )}
         {!user && (
-          <>
+          <div className="flex flex-col items-center gap-4 p-8 bg-gray-200 rounded-lg w-[350px]">
             <div className="flex flex-col gap-1">
               <label>Email</label>
               <input
@@ -160,17 +216,8 @@ function IndexOptions() {
               className="px-4 py-2 text-white bg-green-500 rounded btn hover:bg-green-600">
               Login
             </button>
-
-            <button
-              onClick={(e) => {
-                handleOAuthLogin("github")
-              }}
-              className="px-4 py-2 text-white bg-gray-800 rounded btn hover:bg-gray-900">
-              Sign in with GitHub
-            </button>
-          </>
+          </div>
         )}
-      </div>
     </main>
   )
 }

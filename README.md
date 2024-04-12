@@ -8,4 +8,6 @@ You can add the selected word to the dictionary, after which it can be viewed on
 
 ---
 
-![1712595870661](image/README/1712595870661.png)
+![1712946167873](image/README/1712946167873.png)
+
+![1712946197365](image/README/1712946197365.png)

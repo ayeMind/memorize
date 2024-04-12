@@ -13,7 +13,7 @@ document.addEventListener("selectionchange", function () {
   }
 
   selectedText = window.getSelection().toString().trim()
-  
+
   if (selectedText !== "") {
 
     const prevContainer = document.querySelector(
