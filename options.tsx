@@ -24,18 +24,27 @@ function IndexOptions() {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
 
-  const [settings, setSettings] = useState<any>({
-    "bold": false,
-    "cursive": false,
-    "color": "#ff22ff",
-    "card-prefer": "Definition"
-  })
+  const [bold, setBold] = useState(false)
+  const [cursive, setCursive] = useState(false)
+  const [color, setColor] = useState("#ff22ff")
+  const [cardPrefer, setCardPrefer] = useState("Definition")
 
   useEffect(() => {
 
     getSettings().then(data => {
       console.log(data, "DATAA");
-      setSettings(data)
+      if (data.bold) {
+        setBold("on")
+      }
+      if (data.cursive) {
+        setCursive("on")
+      }
+      if (data.color) {
+        setColor(data.color)
+      }
+      if (data["card-prefer"]) {
+        setCardPrefer(data["card-prefer"])
+      }
     }).catch(
       err => console.error(err)
     )
@@ -116,9 +125,7 @@ function IndexOptions() {
     
     changeSettings(request).catch(error => console.error(error))
   }
-
-  const defaultColor = (settings["color"] ? settings["color"] : "#ee22ee")
-
+  
   return (
     <main className="flex items-center justify-center h-screen font-[Quicksand] text-[20px]">
         {(user && user.confirmed_at) && (
@@ -128,10 +135,10 @@ function IndexOptions() {
               <div className="w-[512px] p-4 bg-cyan-950 rounded text-[#f2f2f2]">
                 <h2>Highlighting words on a page</h2>
                 <div className="flex flex-col gap-4 mt-4">
-                  <Switch defaultValue={settings["bold"]} name="bold" text="Bold" onChange={() => {}} />
-                  <Switch defaultValue={settings["cursive"]} name="cursive" text="Cursive" onChange={() => {}} />
+                  <Switch value={bold}  name="bold" text="Bold" onChange={(e) => setBold(prev => !prev)} />
+                  <Switch value={cursive} name="cursive" text="Cursive" onChange={(e) => setCursive(prev => !prev)} />
                   <div className="flex gap-2">
-                    <input name="color" defaultValue={defaultColor} className="rounded-xl p-1 w-[60px] h-[34px] bg-[#ccc]" type="color" />
+                    <input name="color" value={color} onChange={(e) => setColor(e.target.value)} className="rounded-xl p-1 w-[60px] h-[34px] bg-[#ccc]" type="color" />
                     <label>Text shadow color</label>
                   </div>
                 </div>
@@ -139,12 +146,12 @@ function IndexOptions() {
 
               <div className="w-[512px] p-4 bg-cyan-950 rounded text-[#f2f2f2]">
                 <h2>What do you want to see on the card first?</h2>
-                <select defaultValue={settings["card-prefer"]} name="card-prefer" className="bg-[#ccc] text-black px-2 rounded mt-4">
+                <select value={cardPrefer} onChange={(e) => setCardPrefer(e.target.value)} name="card-prefer" className="bg-[#ccc] text-black px-2 rounded mt-4">
                   <option value="Definition">Definition</option>
                   <option value="Examples">Examples</option>
                   <option value="Synonyms">Synonyms</option>
                 </select>              
-              </div>
+              </div>  
 
             <button className="p-2 bg-blue-600 text-[#f2f2f2] rounded btn hover:bg-blue-700">Save changes
             </button>

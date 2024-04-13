@@ -3,6 +3,7 @@ import { CardPopup } from "~components/card-popup"
 import { createRoot } from "react-dom/client"
 import { getWord } from "~api/getWord"
 import type { Card } from "~interfaces"
+import { getSettings } from "../api/getSettings"
 
 document.addEventListener("click", (e) => {
   const target = e.target as Node
@@ -59,23 +60,30 @@ const highlightWord = (word: string) => {
   })
 }
 
+getSettings().then(data => {
+  const bold = data.bold
+  const cursive = data.cursive 
+  const color = data.color 
+
+  const style = `
+    .extension-word-memorize {
+        text-shadow: 0px 0px 5px ${color};
+        cursor: pointer;
+        ${cursive && "font-style: italic;"}
+        ${bold && "font-weight: 700;"}
+    }
+`
+  const styleElement = document.createElement("style")
+  styleElement.innerHTML = style
+  document.head.appendChild(styleElement)
+})
+
+
 
 getMyWords().then(data => {
   (data as string[]).forEach((word) => {
     highlightWord(word)
 })
 })
-
-
-const style = `
-    .extension-word-memorize {
-        text-shadow: 0px 0px 5px #e2e;
-        cursor: pointer;
-    }
-`
-
-const styleElement = document.createElement("style")
-styleElement.innerHTML = style
-document.head.appendChild(styleElement)
 
 export {}

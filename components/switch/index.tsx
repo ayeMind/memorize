@@ -4,18 +4,19 @@ interface Props {
     text: string;
     name: string;
     onChange: () => void;
-    defaultValue: string;
+    value: string;
 }
 
-export const Switch = ({text, name, onChange, defaultValue}) => {
+export const Switch = ({text, name, onChange, value}) => {
 
   const sliderClass = classes.slider + ' ' + classes.round;
+
 
   return (
     <div className="flex gap-2">
         <div>      
             <label className={classes["switch"]}>
-            <input defaultValue={defaultValue} name={name} type="checkbox" role="switch" onChange={onChange} />
+            <input checked={value} name={name} type="checkbox" role="switch" onChange={onChange} />
             <span className={sliderClass}></span>
             </label>
         </div>

@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getSettings } from "~api/getSettings";
 import { CardInfoBlock } from "~components/card-info-block";
 import { Tab } from "~components/tab";
 import type { Card } from "~interfaces";
@@ -6,6 +7,13 @@ import type { Card } from "~interfaces";
 export const CardPopup = (props: Card) => {
 
   const [selectedTab, setSelectedTab] = useState("Definition")
+
+  useEffect(() => {
+    getSettings().then(data => {
+      setSelectedTab(data["card-prefer"])
+    })
+  }, [])
+
   const [showAnswer, setShowAnswer] = useState(false)
 
   const getText = () => {
