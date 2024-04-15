@@ -4,4 +4,7 @@ module.exports = {
   darkMode: "class",
   content: ["./**/*.tsx"],
   plugins: [],
+  corePlugins: {
+    preflight: false,
+  },
 }

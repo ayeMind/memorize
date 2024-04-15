@@ -12,17 +12,17 @@ export const AudioBlock = ({ audioLink, transcription }: Props) => {
   }
 
   return (
-    <div className="w-full text-center">
+    <div className="w-full text-center memorize">
       <p className="text-[14px] text-[#A99BFF]">Pronunciation</p>
-      <div className="bg-[#6013DD] px-2 h-1 rounded-t-md" />
-      <div className="bg-[#414141] px-3 py-2 text-[18px] h-[48px] flex justify-center items-center relative">
+      <div className="memorize bg-[#6013DD] px-2 h-1 rounded-t-md" />
+      <div className="memorize bg-[#414141] px-3 py-2 text-[18px] h-[48px] flex justify-center items-center relative">
           <audio
             className="absolute left-4 w-[104px] h-[24px] extension-audio-memorize"
             src={audioLink}
           />
           <svg
             onClick={startAudio}
-            className="absolute visible overflow-visible cursor-pointer left-4"
+            className="absolute visible overflow-visible cursor-pointer memorize left-4"
             width="24"
             height="24"
             fill="#ffffff"

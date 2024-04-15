@@ -13,7 +13,7 @@ export const Switch = ({text, name, onChange, value}) => {
 
 
   return (
-    <div className="flex gap-2">
+    <div className="flex gap-2 memorize">
         <div>      
             <label className={classes["switch"]}>
             <input checked={value} name={name} type="checkbox" role="switch" onChange={onChange} />

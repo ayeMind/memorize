@@ -38,7 +38,6 @@ async function handleClick(e) {
   popup.style.top = `${top}px`
   document.body.appendChild(popup)
   const wordInfo = await getWord(word) as Card
-  console.log("wordinfo", wordInfo);
   
   createRoot(popup).render(<CardPopup {...wordInfo} />)
 }

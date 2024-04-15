@@ -14,11 +14,11 @@ export const CardInfoBlock = (props: Props) => {
       }
 
   return (
-    <div className="bg-[#F5EFFF] flex flex-col items-center justify-center gap-4 p-4 w-full rounded-md">
-       <div className="relative flex justify-center w-full gap-2 mt-4">
+    <div className="memorize bg-[#F5EFFF] flex flex-col items-center justify-center gap-4 p-4 w-full rounded-md">
+       <div className="relative flex justify-center w-full gap-2 mt-4 memorize">
                 <svg
                     onClick={startAudio}
-                    className="visible overflow-visible cursor-pointer"
+                    className="visible overflow-visible cursor-pointer memorize"
                     width="24"
                     height="24"
                     fill="#000000"

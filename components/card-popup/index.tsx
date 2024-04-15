@@ -27,9 +27,9 @@ export const CardPopup = (props: Card) => {
   }
   
   return (
-    <div className="card-popup flex flex-col items-center visible px-8 py-5 w-[420px] bg-[#232323] opacity-100">
-       <p className="text-[#fff] text-[32px] font-[Quicksand]">{props.word[0].toUpperCase() + props.word.slice(1)}</p>
-       <div className="flex justify-between w-full px-5 mt-5 mb-0">
+    <div className="memorize card-popup flex flex-col items-center visible px-8 py-5 w-[420px] bg-[#232323] opacity-100">
+       <p className="memorize text-[#fff] text-[32px] font-[Quicksand]">{props.word[0].toUpperCase() + props.word.slice(1)}</p>
+       <div className="memorize flex justify-between w-full px-5 mt-5 mb-0">
           <Tab title="Definition" active={selectedTab} onClick={() => setSelectedTab("Definition")} />
           <Tab title="Examples" active={selectedTab} onClick={() => setSelectedTab("Examples")} />
           <Tab title="Synonyms" active={selectedTab} onClick={() => setSelectedTab("Synonyms")} />
@@ -45,10 +45,10 @@ export const CardPopup = (props: Card) => {
           <p className="text-[#fff] mt-5 font-[Quicksand] text-[20px]">{props.translation}</p>
         )
        }
-       <div className="flex justify-between w-full mt-5">
-        <button className="font-[Quicksand] text-[#FBF8FF] bg-[#C8ABF8] w-[106px] h-[36px] rounded-md">easy</button>
-        <button className="font-[Quicksand] text-[#FBF8FF] bg-[#9E66F9] w-[106px] h-[36px] rounded-md">medium</button>
-        <button className="font-[Quicksand] text-[#F8F3FF] bg-[#4521D6] w-[106px] h-[36px] rounded-md">hard</button>
+       <div className="memorize flex justify-between w-full mt-5">
+        <button className="memorize btn-reset font-[Quicksand] text-[#FBF8FF] bg-[#C8ABF8] w-[106px] h-[36px] rounded-md">easy</button>
+        <button className="memorize btn-reset font-[Quicksand] text-[#FBF8FF] bg-[#9E66F9] w-[106px] h-[36px] rounded-md">medium</button>
+        <button className="memorize btn-reset font-[Quicksand] text-[#F8F3FF] bg-[#4521D6] w-[106px] h-[36px] rounded-md">hard</button>
        </div>
     </div>
   );

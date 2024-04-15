@@ -97,16 +97,16 @@ function IndexPopup() {
 
   return (
     <div
-      className="m-0 popup-extension visible block p-5 w-[340px] bg-[#232323] opacity-100"
+      className="memorize border-0 m-0 z-[1000] popup-extension visible block p-5 w-[340px] bg-[#232323] opacity-100"
       onKeyDown={onKeyDown}>
-      <div className="flex gap-2 text-[20px] mb-2">
+      <div className="memorize flex gap-2 text-[20px] mb-2">
         <input
           value={value}
           onChange={(e) => setValue(e.target.value.trim().toLowerCase())}
-          className="w-64 h-auto px-2 py-1 text-[16px] text-[#f5f5f5] rounded-md bg-[#414141]"
+          className="memorize input-reset w-64 h-auto px-2 py-1 text-[16px] font-[100] text-[#f5f5f5] rounded-md bg-[#414141]"
           placeholder="word"
         />
-        <button onClick={handleGetInfo} className="text-[#ffffff] bg-[#7e7e7e] h-auto rounded-md px-2 py-1 text-[16px] hover:opacity-80">
+        <button onClick={handleGetInfo} className="memorize btn-reset text-[#ffffff] font-[100] bg-[#7e7e7e] h-auto rounded-md px-2 py-1 text-[16px] hover:opacity-80">
           Get
         </button>
         
@@ -124,7 +124,7 @@ function IndexPopup() {
         )}
       </div>
       {definition ? (
-        <div className="flex flex-col gap-[12px] relative w-full items-center">
+        <div className="memorize flex flex-col gap-[12px] relative w-full items-center">
           <InfoBlock title="Definition" text={definition} />
           {context ? (
           <InfoBlock title="Example" text={context} />
@@ -136,14 +136,14 @@ function IndexPopup() {
       ) : (
         ""
       )}
-        <div className="flex flex-col items-center w-full">
+        <div className="flex flex-col items-center w-full memorize">
           {!showTranslation && value && (
-            <button type="button" onClick={toggleShow} className="mt-4 text-[#A99BFF]">Show translation</button>
+            <button type="button" onClick={toggleShow} className="memorize btn-reset mt-4 text-[#A99BFF]">Show translation</button>
           )}
           {showTranslation && value && (
             <p className="mt-4 text-[#f5f5f5]">{translation}</p>
           )}
-          <button className="py-2 px-4 text-[#f5f5f5] text-[18px] bg-[#6013DD] rounded-lg hover:opacity-80 transition-colors mt-4 mx-0"
+          <button className="memorize btn-reset py-2 px-4 text-[#f5f5f5] text-[18px] bg-[#6013DD] rounded-lg hover:opacity-80 transition-colors mt-4 mx-0"
                   onClick={handleAddToCards}>
             Add to cards
           </button>
@@ -152,9 +152,9 @@ function IndexPopup() {
 
       {chrome.runtime.openOptionsPage ? (
         <button
-          className="absolute cursor-pointer right-5 bottom-2"
+          className="absolute cursor-pointer memorize btn-reset right-5 bottom-2"
           onClick={() => chrome.runtime.openOptionsPage()}>
-            <IconSettings color="white" />
+            <IconSettings color="white" className="svg-reset" />
         </button>
       ) : (
         ""
