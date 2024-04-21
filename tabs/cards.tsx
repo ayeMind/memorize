@@ -20,11 +20,11 @@ const Cards = () => {
   
   return (
     <div
-      className="flex flex-col items-center w-screen h-screen bg-fixed bg-no-repeat bg-cover memorize"
+      className="flex flex-col items-center w-screen min-h-screen bg-fixed bg-no-repeat bg-cover memorize"
       style={{ backgroundImage: `url(${image}` }}>
       <div className="memorize bg-[#232323] rounded-b h-[50px] px-6 py-3 flex justify-center items-center">
         <div className="flex gap-3 memorize">
-          <button className="bg-[#5000D2] rounded btn-reset p-2 border-0 flex gap-2">
+          <button className="bg-[#5000D2] rounded btn-reset p-2 border-0 flex gap-2 hover:opacity-80">
             <p className="m-0 text-[18px] text-[#EFE5FF]">Play cards</p>
             <IconPlayerPlay color="white" />
           </button>
@@ -42,7 +42,7 @@ const Cards = () => {
 
       <div className="flex flex-col gap-1">
         {words.map((word, index) => (
-          <CardItem key={index} card={word} />
+          <CardItem words={words} setWords={setWords} key={index} card={word} />
         ))}
       </div>
     
