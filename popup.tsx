@@ -1,7 +1,7 @@
 import "index.css"
+// @ts-ignore
 import classes from "popup.module.css"
 import { useEffect, useState } from "react"
-import { IconCards, IconSettings } from "@tabler/icons-react"
 import { getWordContext } from "~api/getContext"
 import { getWordDefinition } from "~api/getDefinition"
 import { getWordPronunciation } from "~api/getPronunciation"
@@ -10,6 +10,7 @@ import { InfoBlock } from "~components/info-block"
 import { addCard } from "~api/addCard"
 import { getWordTranslation } from "~api/getTranslation"
 import { getWordSynonyms } from "~api/getSynonyms"
+import { NavigateIcons } from "~components/navigate-icons"
 
 
 function IndexPopup() {
@@ -156,19 +157,7 @@ function IndexPopup() {
   
 
       {chrome.runtime ? (
-        <div className="absolute flex flex-col gap-1 memorize right-2 top-2">
-          <button
-            className="cursor-pointer memorize btn-reset"
-            onClick={() => chrome.runtime.sendMessage("showOptions")}>
-              <IconSettings size={32} color="#fff" className="border-0 svg-reset fill-none" />
-          </button>
-          <button
-            className="cursor-pointer memorize btn-reset"
-            onClick={() => chrome.runtime.sendMessage("showCards")}>
-              <IconCards size={32} color="#fff" className="border-0 svg-reset fill-none" />
-          </button>
-        </div>
-
+        <NavigateIcons />
       ) : (
         ""
       )}

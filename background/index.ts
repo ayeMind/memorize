@@ -8,6 +8,10 @@ chrome.runtime.onMessage.addListener((request) => {
   if (request === "showOptions") {
     chrome.runtime.openOptionsPage();
   } else if (request === "showCards") {
-    window.open("chrome-extension://joobomfpdpigjppgddobghoimknghicm/tabs/cards.html")
+    chrome.tabs.create({
+      url: "chrome-extension://joobomfpdpigjppgddobghoimknghicm/tabs/cards.html",
+      active: true,
+      selected: true
+    });
   }
 })

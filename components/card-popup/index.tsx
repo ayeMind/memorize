@@ -1,7 +1,7 @@
-import { IconCards, IconSettings } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import { getSettings } from "~api/getSettings";
 import { CardInfoBlock } from "~components/card-info-block";
+import { NavigateIcons } from "~components/navigate-icons";
 import { Tab } from "~components/tab";
 import type { Card } from "~interfaces";
 
@@ -53,19 +53,7 @@ export const CardPopup = (props: Card) => {
        </div>
 
        {chrome.runtime ? (
-        <div className="absolute flex flex-col gap-1 memorize right-2 top-2">
-          <button
-            className="cursor-pointer memorize btn-reset"
-            onClick={() => chrome.runtime.sendMessage("showOptions")}>
-              <IconSettings size={32} color="#fff" className="border-0 svg-reset fill-none" />
-          </button>
-          <button
-            className="cursor-pointer memorize btn-reset"
-            onClick={() => chrome.runtime.sendMessage("showCards")}>
-              <IconCards size={32} color="#fff" className="border-0 svg-reset fill-none" />
-          </button>
-        </div>
-
+        <NavigateIcons />
       ) : (
         ""
       )}

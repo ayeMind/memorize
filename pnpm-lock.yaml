@@ -9,6 +9,9 @@ overrides:
   axios@>=0.8.1 <0.28.0: '>=0.28.0'
 
 dependencies:
+  '@parcel/diagnostic':
+    specifier: ^2.12.0
+    version: 2.12.0
   '@plasmohq/messaging':
     specifier: 0.6.2
     version: 0.6.2(react@18.2.0)
@@ -869,6 +872,14 @@ packages:
       msgpackr: 1.10.1
       nullthrows: 1.1.1
       semver: 7.5.4
+    dev: false
+
+  /@parcel/diagnostic@2.12.0:
+    resolution: {integrity: sha512-8f1NOsSFK+F4AwFCKynyIu9Kr/uWHC+SywAv4oS6Bv3Acig0gtwUjugk0C9UaB8ztBZiW5TQZhw+uPZn9T/lJA==}
+    engines: {node: '>= 12.0.0'}
+    dependencies:
+      '@mischnic/json-sourcemap': 0.1.1
+      nullthrows: 1.1.1
     dev: false
 
   /@parcel/diagnostic@2.8.3:
