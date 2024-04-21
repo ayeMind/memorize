@@ -12,6 +12,9 @@ import { getSettings } from "~api/getSettings"
 import { Switch } from "~components/switch"
 import { supabase } from "~core/supabase"
 
+// @ts-ignore
+import image from "assets/background.png"
+
 
 function IndexOptions() {
   const [user, setUser] = useStorage<User>({
@@ -128,7 +131,8 @@ function IndexOptions() {
   }
 
   return (
-    <main className="memorize m-0 p-0 flex justify-center h-screen font-[Quicksand] text-[20px] bg-[#100e17] text-[#f2f2f2]">
+    <main className="memorize m-0 p-0 flex justify-center h-screen font-[Quicksand] text-[20px] text-[#f2f2f2]"
+          style={{ backgroundImage: `url(${image}` }}>
       {user && user.confirmed_at && (
         <div className="relative flex flex-col items-center memorize">
           <form

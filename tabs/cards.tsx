@@ -1,7 +1,8 @@
 import "../index.css"
 import { IconPlayerPlay, IconSettings } from "@tabler/icons-react"
 import { useEffect, useState } from "react"
-import { getMyWords } from "../api/getMyWords"
+import { getCards } from "~api/getCards"
+import { CardItem } from "~components/card"
 
 // @ts-ignore
 import image from "../assets/background.png"
@@ -11,7 +12,7 @@ const Cards = () => {
   const [words, setWords] = useState([]);
 
   useEffect(() => {
-    getMyWords().then(data => {
+    getCards().then(data => {
       console.log(data);
       setWords(data)
     })
@@ -19,7 +20,7 @@ const Cards = () => {
   
   return (
     <div
-      className="flex justify-center w-screen h-screen bg-fixed bg-no-repeat bg-cover memorize"
+      className="flex flex-col items-center w-screen h-screen bg-fixed bg-no-repeat bg-cover memorize"
       style={{ backgroundImage: `url(${image}` }}>
       <div className="memorize bg-[#232323] rounded-b h-[50px] px-6 py-3 flex justify-center items-center">
         <div className="flex gap-3 memorize">
@@ -39,12 +40,15 @@ const Cards = () => {
         </div>
       </div>
 
-      <div className="w-[500px] bg-[#232323] h-[32px] memorize shadow">
-        <p className="font-[Quicksand] text-[18px]">santible</p>
+      <div className="flex flex-col gap-1">
+        {words.map((word, index) => (
+          <CardItem key={index} card={word} />
+        ))}
       </div>
-      <div className="memorize w-[500px] bg-[#EFE5FF]">
-
-      </div>
+    
+      {/* <div className="memorize w-[500px] bg-[#EFE5FF]">
+        
+      </div> */}
     </div>
   )
 }
