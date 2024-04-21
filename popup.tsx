@@ -1,6 +1,7 @@
 import "index.css"
+import classes from "popup.module.css"
 import { useEffect, useState } from "react"
-import { IconSettings } from "@tabler/icons-react"
+import { IconCards, IconSettings } from "@tabler/icons-react"
 import { getWordContext } from "~api/getContext"
 import { getWordDefinition } from "~api/getDefinition"
 import { getWordPronunciation } from "~api/getPronunciation"
@@ -95,15 +96,17 @@ function IndexPopup() {
     setShowTranslation(prev => !prev)
   }
 
+  const scrollbarStyles = classes["memorize"]
+
   return (
     <div
-      className="memorize border-0 m-0 z-[1000] popup-extension visible block p-5 w-[340px] bg-[#232323] opacity-100"
+      className={`memorize border-0 m-0 z-[1000] popup-extension visible block p-5 w-[340px] bg-[#232323] opacity-100 ${scrollbarStyles}`}
       onKeyDown={onKeyDown}>
       <div className="memorize flex gap-2 text-[20px] mb-2">
         <input
           value={value}
           onChange={(e) => setValue(e.target.value.trim().toLowerCase())}
-          className="memorize input-reset w-64 h-auto px-2 py-1 text-[16px] font-[100] text-[#f5f5f5] rounded-md bg-[#414141]"
+          className="memorize input-reset w-52 h-auto px-2 py-1 text-[16px] font-[100] text-[#f5f5f5] rounded-md bg-[#414141]"
           placeholder="word"
         />
         <button onClick={handleGetInfo} className="memorize btn-reset text-[#ffffff] font-[100] bg-[#7e7e7e] h-auto rounded-md px-2 py-1 text-[16px] hover:opacity-80">
@@ -137,28 +140,39 @@ function IndexPopup() {
         ""
       )}
         <div className="flex flex-col items-center w-full memorize">
-          {!showTranslation && value && (
+          {!showTranslation && translation && (
             <button type="button" onClick={toggleShow} className="memorize btn-reset mt-4 text-[#A99BFF]">Show translation</button>
           )}
-          {showTranslation && value && (
-            <p className="mt-4 text-[#f5f5f5]">{translation}</p>
+          {showTranslation && translation && (
+            <p className="mt-4 text-[#f5f5f5] font-[Quicksand] text-[18px]">{translation}</p>
           )}
-          <button className="memorize btn-reset py-2 px-4 text-[#f5f5f5] text-[18px] bg-[#6013DD] rounded-lg hover:opacity-80 transition-colors mt-4 mx-0"
-                  onClick={handleAddToCards}>
-            Add to cards
-          </button>
+          {translation && (
+            <button className="memorize btn-reset py-2 px-4 text-[#f5f5f5] text-[18px] bg-[#6013DD] rounded-lg hover:opacity-80 transition-colors mt-4 mx-0"
+                    onClick={handleAddToCards}>
+              Add to cards
+            </button>
+          )}
         </div>
   
 
-      {chrome.runtime.openOptionsPage ? (
-        <button
-          className="absolute cursor-pointer memorize btn-reset right-5 bottom-2"
-          onClick={() => chrome.runtime.openOptionsPage()}>
-            <IconSettings color="white" className="svg-reset" />
-        </button>
+      {chrome.runtime ? (
+        <div className="absolute flex flex-col gap-1 memorize right-2 top-2">
+          <button
+            className="cursor-pointer memorize btn-reset"
+            onClick={() => chrome.runtime.sendMessage("showOptions")}>
+              <IconSettings size={32} color="#fff" className="border-0 svg-reset fill-none" />
+          </button>
+          <button
+            className="cursor-pointer memorize btn-reset"
+            onClick={() => chrome.runtime.sendMessage("showCards")}>
+              <IconCards size={32} color="#fff" className="border-0 svg-reset fill-none" />
+          </button>
+        </div>
+
       ) : (
         ""
       )}
+
     </div>
   )
 }

@@ -12,6 +12,7 @@ import { getSettings } from "~api/getSettings"
 import { Switch } from "~components/switch"
 import { supabase } from "~core/supabase"
 
+
 function IndexOptions() {
   const [user, setUser] = useStorage<User>({
     key: "user",
@@ -127,15 +128,15 @@ function IndexOptions() {
   }
 
   return (
-    <main className="memorize m-0 p-0 flex items-center justify-center h-screen font-[Quicksand] text-[20px] bg-[#100e17] text-[#f2f2f2]">
+    <main className="memorize m-0 p-0 flex justify-center h-screen font-[Quicksand] text-[20px] bg-[#100e17] text-[#f2f2f2]">
       {user && user.confirmed_at && (
-        <div className="flex flex-col items-center memorize">
+        <div className="relative flex flex-col items-center memorize">
           <form
-            className="flex flex-col items-center w-screen h-screen gap-4 p-8 settings-extension"
+            className="flex flex-col items-center gap-4 p-8 settings-extension"
             onSubmit={handleSaveOptions}>
-            <h1 className="text-[32px]">Settings</h1>
+            <h1 className="text-[32px] m-0">Settings</h1>
             <div className="memorize w-[512px] p-4 bg-[#232323] rounded text-[#f2f2f2]">
-              <h2>Highlighting words on a page</h2>
+              <h2 className="font-[200] text-[24px]">Highlighting words on a page</h2>
               <div className="flex flex-col gap-4 mt-4 memorize">
                 <Switch
                   value={bold}
@@ -163,34 +164,36 @@ function IndexOptions() {
             </div>
 
             <div className="memorize w-[512px] p-4 bg-[#232323] rounded text-[#f2f2f2]">
-              <h2>What do you want to see on the card first?</h2>
+              <h2 className="font-[200] text-[24px]">What do you want to see on the card first?</h2>
               <select
                 value={cardPrefer}
                 onChange={(e) => setCardPrefer(e.target.value)}
                 name="card-prefer"
-                className="memorize bg-[#ccc] text-black px-2 rounded h-8">
-                <option value="Definition">Definition</option>
-                <option value="Examples">Examples</option>
-                <option value="Synonyms">Synonyms</option>
+                className="memorize bg-[#ccc] text-black px-2 rounded-[1px] h-8 text-[18px]">
+                <option value="Definition" className="p-2">Definition</option>
+                <option value="Examples" className="p-2">Examples</option>
+                <option value="Synonyms" className="p-2">Synonyms</option>
               </select>
             </div>
 
-            <button className="memorize p-2 bg-blue-600 text-[#f2f2f2] rounded btn btn-reset hover:bg-blue-700">
-              Save changes
-            </button>
-            <button
-              type="button"
-              onClick={() =>
-                changeSettings({
-                  bold: false,
-                  cursive: false,
-                  color: "#ff22ff",
-                  "card-prefer": "Definition"
-                }).then(data => window.location.reload())
-              }
-              className="memorize p-2 bg-blue-600 text-[#f2f2f2] rounded btn btn-reset hover:bg-blue-700">
-              Reset settings
-            </button>
+            <div className="flex gap-12 mt-2 memorize">
+              <button className="memorize p-2 bg-blue-600 text-[#f2f2f2] rounded btn btn-reset hover:bg-blue-700">
+                Save changes
+              </button>
+              <button
+                type="button"
+                onClick={() =>
+                  changeSettings({
+                    bold: false,
+                    cursive: false,
+                    color: "#ff22ff",
+                    "card-prefer": "Definition"
+                  }).then(data => window.location.reload())
+                }
+                className="memorize p-2 bg-blue-600 text-[#f2f2f2] rounded btn btn-reset hover:bg-blue-700">
+                Reset settings
+              </button>
+            </div>
           </form>
 
           <button

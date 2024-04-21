@@ -13,7 +13,7 @@ export const AudioBlock = ({ audioLink, transcription }: Props) => {
 
   return (
     <div className="w-full text-center memorize">
-      <p className="text-[14px] text-[#A99BFF]">Pronunciation</p>
+      <p className="text-[14px] text-[#A99BFF] mx-0 mt-0 mb-1">Pronunciation</p>
       <div className="memorize bg-[#6013DD] px-2 h-1 rounded-t-md" />
       <div className="memorize bg-[#414141] px-3 py-2 text-[18px] h-[48px] flex justify-center items-center relative">
           <audio

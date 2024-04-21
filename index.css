@@ -28,7 +28,9 @@
   .svg-reset {
     display: block; /* 1 */
     vertical-align: middle; /* 2 */
-   
+    border-width: 0;
+    fill: none;
+    background: none;
   }
 
   .memorize {

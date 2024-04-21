@@ -1,3 +1,4 @@
+import { IconCards, IconSettings } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import { getSettings } from "~api/getSettings";
 import { CardInfoBlock } from "~components/card-info-block";
@@ -29,7 +30,7 @@ export const CardPopup = (props: Card) => {
   return (
     <div className="memorize card-popup flex flex-col items-center visible px-8 py-5 w-[420px] bg-[#232323] opacity-100">
        <p className="memorize text-[#fff] text-[32px] font-[Quicksand]">{props.word[0].toUpperCase() + props.word.slice(1)}</p>
-       <div className="memorize flex justify-between w-full px-5 mt-5 mb-0">
+       <div className="flex justify-between w-full px-5 mt-5 mb-0 memorize">
           <Tab title="Definition" active={selectedTab} onClick={() => setSelectedTab("Definition")} />
           <Tab title="Examples" active={selectedTab} onClick={() => setSelectedTab("Examples")} />
           <Tab title="Synonyms" active={selectedTab} onClick={() => setSelectedTab("Synonyms")} />
@@ -45,11 +46,30 @@ export const CardPopup = (props: Card) => {
           <p className="text-[#fff] mt-5 font-[Quicksand] text-[20px]">{props.translation}</p>
         )
        }
-       <div className="memorize flex justify-between w-full mt-5">
+       <div className="flex justify-between w-full mt-5 memorize">
         <button className="memorize btn-reset font-[Quicksand] text-[#FBF8FF] bg-[#C8ABF8] w-[106px] h-[36px] rounded-md">easy</button>
         <button className="memorize btn-reset font-[Quicksand] text-[#FBF8FF] bg-[#9E66F9] w-[106px] h-[36px] rounded-md">medium</button>
         <button className="memorize btn-reset font-[Quicksand] text-[#F8F3FF] bg-[#4521D6] w-[106px] h-[36px] rounded-md">hard</button>
        </div>
+
+       {chrome.runtime ? (
+        <div className="absolute flex flex-col gap-1 memorize right-2 top-2">
+          <button
+            className="cursor-pointer memorize btn-reset"
+            onClick={() => chrome.runtime.sendMessage("showOptions")}>
+              <IconSettings size={32} color="#fff" className="border-0 svg-reset fill-none" />
+          </button>
+          <button
+            className="cursor-pointer memorize btn-reset"
+            onClick={() => chrome.runtime.sendMessage("showCards")}>
+              <IconCards size={32} color="#fff" className="border-0 svg-reset fill-none" />
+          </button>
+        </div>
+
+      ) : (
+        ""
+      )}
+      
     </div>
   );
 };
