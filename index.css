@@ -5,6 +5,7 @@
 @layer components {
   body, main, div {
     margin: 0;
+    overflow-x: hidden;
   }
 
   .btn-reset {
@@ -41,6 +42,11 @@
     margin: 0;
     padding: 0;
     height: auto;
+  }
+
+  .memorize-details {
+    transition: height 0.3s ease-in-out;
+    overflow: hidden; 
   }
 }
 

@@ -33,19 +33,18 @@ const Cards = () => {
             onClick={() => chrome.runtime.sendMessage("showOptions")}>
             <IconSettings
               size={32}
-              color="#fff"
-              className="border-0 svg-reset fill-none"
+              color="#F5EFFF"
+              className="border-0 svg-reset fill-none hover:opacity-80"
             />
           </button>
         </div>
       </div>
 
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col items-center">
         {words.map((word, index) => (
           <CardItem words={words} setWords={setWords} key={index} card={word} />
         ))}
       </div>
-    
       {/* <div className="memorize w-[500px] bg-[#EFE5FF]">
         
       </div> */}

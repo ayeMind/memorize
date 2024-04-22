@@ -14,14 +14,17 @@ import { NavigateIcons } from "~components/navigate-icons"
 
 
 function IndexPopup() {
+
   const [value, setValue] = useState("")
   const [pronunciationUrl, setPronunciationUrl] = useState("")
-  const [transcription, setTranscription] = useState("")
+  const [transcription, setTranscription] = useState("—")
   const [definition, setDefinition] = useState("")
   const [translation, setTranslation] = useState("")
   const [context, setContext] = useState("")
   const [contextList, setContextList] = useState([])
   const [synonyms, setSynonums] = useState([])
+
+  const [showPopup, setShowPopup] = useState(false)
 
   const [showTranslation, setShowTranslation] = useState(false)
 
@@ -37,28 +40,44 @@ function IndexPopup() {
     console.log(word)
 
     setPronunciationUrl("")
-    setTranscription("")
-    setContext("")
-    setDefinition("")
+    setTranscription("—")
+    setContext("Searching...")
+    setDefinition("Not found")
     setTranslation("")
     setSynonums([])
 
-    const translateData = await getWordTranslation(word)
-    setTranslation(translateData)    
+    getWordTranslation(word).then(data => setTranslation(data)).catch(() => setTranslation("—"))
     
-    const url = await getWordPronunciation(word)
-    setPronunciationUrl(url)
+    getWordPronunciation(word).then(data => setPronunciationUrl(data)).catch(() => setPronunciationUrl(""))
 
-    const wordData = await getWordDefinition(word)
-    setTranscription(wordData[0].phonetic)
-    setDefinition(wordData[0].meanings[0].definitions[0].definition)
+    getWordDefinition(word)
+      .then(data => {
+        setTranscription(data[0].phonetic ? data[0].phonetic : "—")
+        const definition = data[0].meanings[0].definitions[0].definition
+        setDefinition(definition ? definition : "Not found")
+        setShowPopup(true)
+      }).catch(() => {
+      setTranscription("—")
+      setDefinition("Not found")
+      setShowPopup(true)
+     })
 
-    const contextData = await getWordContext(word)
-    setContext(contextData[0].source)
-    setContextList(contextData)
+    getWordContext(word)
+      .then(data => {
+        setContext(data[0].source ? data[0].source : "—")
+        setContextList(data ? data : [])
+    }).catch(() => {
+        setContext("—")
+        setContextList([])
+    })
     
-    const synonymsData = await getWordSynonyms(word)
-    setSynonums(synonymsData.map(data => data.synonym))    
+    getWordSynonyms(word)
+      .then(data => {
+        setSynonums(data)
+      }).catch(() => {
+        setSynonums([])
+      })
+
   }
 
   const handleAddToCards = async () => {
@@ -99,7 +118,7 @@ function IndexPopup() {
 
   const scrollbarStyles = classes["memorize"]
 
-  return (
+  return showPopup ? (
     <div
       className={`memorize border-0 m-0 z-[1000] popup-extension visible block p-5 w-[340px] bg-[#232323] opacity-100 ${scrollbarStyles}`}
       onKeyDown={onKeyDown}>
@@ -127,19 +146,14 @@ function IndexPopup() {
           </div>
         )}
       </div>
-      {definition ? (
         <div className="memorize flex flex-col gap-[12px] relative w-full items-center">
-          <InfoBlock title="Definition" text={definition} />
-          {context ? (
-          <InfoBlock title="Example" text={context} />
-          ) : (
-            ""
+          {translation && (
+            <>
+              <InfoBlock title="Definition" text={definition} />
+              <InfoBlock title="Example" text={context} />
+            </>
           )}
-         
         </div>
-      ) : (
-        ""
-      )}
         <div className="flex flex-col items-center w-full memorize">
           {!showTranslation && translation && (
             <button type="button" onClick={toggleShow} className="memorize btn-reset mt-4 text-[#A99BFF]">Show translation</button>
@@ -163,7 +177,7 @@ function IndexPopup() {
       )}
 
     </div>
-  )
+  ) : ""
 }
 
 export default IndexPopup

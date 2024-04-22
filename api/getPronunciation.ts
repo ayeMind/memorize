@@ -9,7 +9,7 @@ async function textToSpeech(word: string) {
         const result = await response.url;
         return await result;
     } catch (error) {
-        console.error(error);
+        console.log('Голос ИИ');
     }
 }
 

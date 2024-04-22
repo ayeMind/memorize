@@ -35,12 +35,14 @@ document.addEventListener("selectionchange", function () {
     const style = `
     .extension-icon-container-memorize {
         position: fixed !important;
-        width: 20px;
-        height: 20px;
+        width: 22px;
+        height: 22px;
         padding: 0px !important;
         margin: 0px !important;
         z-index: 1000000 !important;
         border: none !important;
+        overflow: hidden !important;
+
     }
 
     .extension-icon-memorize {

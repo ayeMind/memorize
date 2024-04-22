@@ -131,7 +131,7 @@ function IndexOptions() {
   }
 
   return (
-    <main className="memorize m-0 p-0 flex justify-center h-screen font-[Quicksand] text-[20px] text-[#f2f2f2]"
+    <main className="memorize m-0 p-0 flex justify-center h-screen font-[Quicksand] text-[20px] text-[#f2f2f2] bg-fixed bg-no-repeat bg-cover"
           style={{ backgroundImage: `url(${image}` }}>
       {user && user.confirmed_at && (
         <div className="relative flex flex-col items-center memorize">

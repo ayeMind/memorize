@@ -1,16 +1,15 @@
 import { supabase } from "~core/supabase"
-import type { Card } from "~interfaces"
 
-export const addCard = async (props: Card) => {
+export const editCard = async (props) => {
     const { data, error } = await supabase.auth.getSession()
     
     if (error) {
       console.error(error)
-      return
+      return error;
     }
 
     if (!data.session) {
-      return
+      return "data.session is not defined"
     }
 
     const { user } = data.session
@@ -24,31 +23,18 @@ export const addCard = async (props: Card) => {
 
 if (existingError) {
   console.error('Error fetching existing data:', existingError)
-  return
+  return existingError;
 }
-
-const filledWord = {
-  word: props.word,
-  translation: props.translation ? props.translation : 'Translation not found',
-  context: props.context ? props.context : [],
-  definition: props.definition ? props.definition : 'Definition not found',
-  transcription: props.transcription ? props.transcription : 'Transcription not found',
-  synonyms: props.synonyms ? props.synonyms : [],
-  pronunciationUrl: props.pronunciationUrl ? props.pronunciationUrl : '',
-}
-
 
 if (existingData && existingData.length > 0) {
-  // Если строчка уже существует
 
-  const existingWords = existingData[0].words.map(elem => elem.word)
-  if (existingWords.includes(props.word)) {
-    return
-  }
-
- 
-
-  const updatedWords = [...existingData[0].words, filledWord]
+  // Меняем карточку
+  const updatedWords = existingData[0].words.map(wordInfo => {
+    if (wordInfo.word === props.word) {
+      return props
+    }
+    return wordInfo
+  })
 
   const { data: updateData, error: updateError } = await supabase
     .from('words')
@@ -57,18 +43,18 @@ if (existingData && existingData.length > 0) {
 
   if (updateError) {
     console.error('Error updating words:', updateError)
-    return
-  }
+    return updateData;
+  } 
 
 } else {
   // Если строчки нет
   const { data: insertData, error: insertError } = await supabase
     .from('words')
-    .insert({ user_id: userId, words: [filledWord] })
+    .insert({ user_id: userId, words: [props] })
 
   if (insertError) {
     console.error('Error inserting new row:', insertError)
-    return
+    return insertError;
   }
 }
 }

@@ -19,11 +19,13 @@ export const CardPopup = (props: Card) => {
 
   const getText = () => {
     if (selectedTab === "Definition") {
-      return props.definition
+      return props.definition ? props.definition : "Not found"
     } else if (selectedTab === "Examples") {
-      return props.context[0].source
+      // random example
+      const randomIndex = props.context.length > 0 ? Math.floor(Math.random() * props.context.length) : -1
+      return (randomIndex !== -1 && props.context[randomIndex]) ? props.context[randomIndex].source : "Not found"
     } else {
-      return props.synonyms.join(", ")
+      return props.synonyms ? props.synonyms.join(", ") : "Not found"
     }
   }
   
