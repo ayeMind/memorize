@@ -46,8 +46,6 @@ if (existingData && existingData.length > 0) {
     return
   }
 
- 
-
   const updatedWords = [...existingData[0].words, filledWord]
 
   const { data: updateData, error: updateError } = await supabase

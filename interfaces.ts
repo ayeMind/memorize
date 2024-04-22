@@ -3,6 +3,11 @@ export interface Context {
     source: string; // english
     target: string // russian translation
   }
+
+export interface Synonym {
+  id: number;
+  synonym: string;
+}
   
 
 export interface Card {
@@ -12,5 +17,5 @@ export interface Card {
     definition: string;
     transcription: string;
     pronunciationUrl: string;
-    synonyms: string[];
+    synonyms: Synonym[];
   }

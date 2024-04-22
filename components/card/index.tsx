@@ -4,6 +4,7 @@ import { removeCard } from "~api/removeCard";
 import { editCard } from "~api/editCard";
 import { CardItemBlock } from "~components/card-item-block";
 import type { Card } from "~interfaces";
+import { SynonymItem } from "~components/synonym-item";
 
 interface Props {
     card: Card;
@@ -26,6 +27,44 @@ export const CardItem = (props: Props) => {
         setCard({
             ...card,
             [type]: value
+        })
+    }
+
+    const handleRemoveSynonym = (synonym: string) => {
+        setDisplayedSynonyms({
+            ...displayedSynonyms,
+            synonyms: displayedSynonyms.synonyms.filter(syn => syn.synonym !== synonym)
+        })
+        setCard({
+            ...card,
+            synonyms: card.synonyms.filter(syn => syn.synonym !== synonym)
+        })
+    }
+
+    const [displayedSynonyms, setDisplayedSynonyms] = useState(props.card)
+
+    const handleAddSynonymItem = () => {
+
+        const maxId = Math.max(...displayedSynonyms.synonyms.map(syn => syn.id));
+
+        setDisplayedSynonyms({
+            ...displayedSynonyms,
+            synonyms: [...displayedSynonyms.synonyms, {id: maxId + 1, synonym: ""}]
+        })
+        setCard({
+            ...card,
+            synonyms: [...card.synonyms, {id: maxId + 1, synonym: ""}]
+        })
+    }
+
+    const handleChangeSynonym = (value: string, id: number) => {
+        setDisplayedSynonyms({
+            ...displayedSynonyms,
+            synonyms: displayedSynonyms.synonyms.map(syn => syn.id === id ? {id: syn.id, synonym: value} : syn)
+        })
+        setCard({
+            ...card,
+            synonyms: displayedSynonyms.synonyms.map(syn => syn.id === id ? {id: syn.id, synonym: value} : syn)
         })
     }
 
@@ -53,8 +92,9 @@ export const CardItem = (props: Props) => {
 
             <div className="mt-2 text-center memorize">
                 <h2 className="mx-0 mb-0 mt-1 font-[Quicksand] text-[#400092] text-[16px]">Synonyms</h2>
-                {props.card.synonyms.map((synonym, index) => (
-                    <p key={index} className="m-0">{synonym}</p>
+                {displayedSynonyms.synonyms.map((synonym, index) => (
+                    <SynonymItem key={synonym.id} synonym={synonym.synonym} 
+                                 onChange={(value) => handleChangeSynonym(value, synonym.id)} removeSynonym={(synonym) => {handleRemoveSynonym(synonym)}} />
                 ))}
             </div>
 

@@ -5,7 +5,6 @@
 @layer components {
   body, main, div {
     margin: 0;
-    overflow-x: hidden;
   }
 
   .btn-reset {

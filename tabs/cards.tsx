@@ -9,6 +9,9 @@ import image from "../assets/background.png"
 
 const Cards = () => {
 
+  const html = document.querySelector("html");
+  html.style.overflowX = "hidden";
+
   const [words, setWords] = useState([]);
 
   useEffect(() => {
