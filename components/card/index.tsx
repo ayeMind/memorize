@@ -1,4 +1,4 @@
-import { IconCircleX } from "@tabler/icons-react";
+import { IconCircleX, IconSquareRoundedPlus } from "@tabler/icons-react";
 import { useState } from "react";
 import { removeCard } from "~api/removeCard";
 import { editCard } from "~api/editCard";
@@ -69,7 +69,11 @@ export const CardItem = (props: Props) => {
     }
 
     const handleSave = () => {
-        editCard(card).then(() => {
+        const filteredCard = {
+            ...card,
+            synonyms: card.synonyms.filter(data => data.synonym)
+        }
+        editCard(filteredCard).then(() => {
             alert("Changes saved");
         })
     }
@@ -90,12 +94,17 @@ export const CardItem = (props: Props) => {
             <CardItemBlock card={props.card} type="Definition" onChange={(value) => handleChange(value, "definition")} />
             <CardItemBlock card={props.card} type="Translation" onChange={(value) => handleChange(value, "translation")} />
 
-            <div className="mt-2 text-center memorize">
-                <h2 className="mx-0 mb-0 mt-1 font-[Quicksand] text-[#400092] text-[16px]">Synonyms</h2>
+            <div className="relative flex flex-col items-center mt-2 text-center memorize">
+                <div className="flex items-center justify-center w-full gap-1 memorize">
+                    <h2 className="mx-0 mb-0 mt-1 font-[Quicksand] text-[#400092] text-[16px]">Synonyms</h2>
+                    <button className="p-0 mt-2 bg-transparent border-0 btn-reset hover:opacity-90" onClick={() => handleAddSynonymItem()}>
+                        <IconSquareRoundedPlus color="#000" width={16} stroke={1} /> 
+                    </button>
+                </div>
                 {displayedSynonyms.synonyms.map((synonym, index) => (
                     <SynonymItem key={synonym.id} synonym={synonym.synonym} 
                                  onChange={(value) => handleChangeSynonym(value, synonym.id)} removeSynonym={(synonym) => {handleRemoveSynonym(synonym)}} />
-                ))}
+                ))}  
             </div>
 
             <button className="bg-[#5000D2] rounded btn-reset p-2 border-0 flex gap-2 hover:opacity-80 mt-4" onClick={handleSave}>
