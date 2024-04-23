@@ -50,9 +50,6 @@ const Cards = () => {
           <CardItem words={words} setWords={setWords} key={index} card={word} />
         ))}
       </div>
-      {/* <div className="memorize w-[500px] bg-[#EFE5FF]">
-        
-      </div> */}
     </div>
   )
 }

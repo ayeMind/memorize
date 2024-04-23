@@ -26,7 +26,7 @@ const Play = () => {
 
     return (
         <div
-        className="flex items-center justify-center w-screen h-screen bg-fixed bg-no-repeat bg-cover memorize play-page"
+        className="relative flex items-center justify-center w-screen h-screen bg-fixed bg-no-repeat bg-cover memorize play-page"
         style={{ backgroundImage: `url(${image}` }}>
             <CardPopup {...showedCards[0]} nextWords={nextWords} />
         </div>

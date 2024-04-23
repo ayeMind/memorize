@@ -42,7 +42,7 @@ export const CardPopup = (props: Card) => {
       difficult: difficult,
       time: new Date().toISOString()
     }).then(() => {
-      const popupContainer = document.querySelector(".memorize-card-popup")
+      const popupContainer = document.querySelector(".card-popup")
       popupContainer.remove()
       if (Array.isArray(props.nextWords)) {
         if (props.nextWords.length > 0) {
@@ -63,11 +63,11 @@ export const CardPopup = (props: Card) => {
   }
 
   return (
-    <div className="memorize card-popup flex flex-col items-center visible px-8 py-5 w-[420px] bg-[#232323] opacity-100">
-      <p className="memorize text-[#fff] text-[32px] font-[Quicksand]">
+    <div className="memorize relative card-popup flex flex-col items-center w-auto visible px-8 py-5 bg-[#232323] opacity-100 font-[Quicksand]">
+      <p className="memorize text-[#fff] text-[32px] m-0 font-[Quicksand]">
         {props.word[0].toUpperCase() + props.word.slice(1)}
       </p>
-      <div className="flex justify-between w-full px-5 mt-5 mb-0 memorize">
+      <div className="flex gap-[24px] justify-center w-full px-5 mt-5 mb-0 memorize">
         <Tab
           title="Definition"
           active={selectedTab}
@@ -95,27 +95,27 @@ export const CardPopup = (props: Card) => {
             e.stopPropagation()
             setShowAnswer(true)
           }}
-          className="text-[#fff] mt-5 underline font-[Quicksand] text-[20px]">
+          className="text-[#fff] mt-5 mb-0 underline font-[Quicksand] text-[20px] bg-transparent border-0">
           show answer
         </button>
       ) : (
-        <p className="text-[#fff] mt-5 font-[Quicksand] text-[20px]">
+        <p className="text-[#fff] mt-5 mb-0 font-[Quicksand] text-[20px]">
           {props.translation}
         </p>
       )}
-      <div className="flex justify-between w-full mt-5 memorize">
+      <div className="flex justify-center w-full gap-4 mt-5 mb-0 memorize">
         <button
-          className="memorize btn-reset font-[Quicksand] text-[#FBF8FF] bg-[#C8ABF8] w-[106px] h-[36px] rounded-md"
+          className="memorize btn-reset text-[20px] font-[Quicksand] text-[#FBF8FF] m-0 bg-[#C8ABF8] w-[106px] h-[36px] rounded-md"
           onClick={() => handleClose("easy")}>
           easy
         </button>
         <button
-          className="memorize btn-reset font-[Quicksand] text-[#FBF8FF] bg-[#9E66F9] w-[106px] h-[36px] rounded-md"
+          className="memorize btn-reset text-[20px] font-[Quicksand] text-[#FBF8FF] m-0 bg-[#9E66F9] w-[106px] h-[36px] rounded-md"
           onClick={() => handleClose("medium")}>
           medium
         </button>
         <button
-          className="memorize btn-reset font-[Quicksand] text-[#F8F3FF] bg-[#4521D6] w-[106px] h-[36px] rounded-md"
+          className="memorize btn-reset text-[20px] font-[Quicksand] text-[#F8F3FF] m-0 bg-[#4521D6] w-[106px] h-[36px] rounded-md"
           onClick={() => handleClose("hard")}>
           hard
         </button>

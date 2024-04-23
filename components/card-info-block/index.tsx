@@ -14,7 +14,7 @@ export const CardInfoBlock = (props: Props) => {
       }
 
   return (
-    <div className="memorize bg-[#F5EFFF] flex flex-col items-center justify-center gap-4 p-4 w-full rounded-md">
+    <div className="memorize bg-[#F5EFFF] border-0 flex flex-col items-center w-[384px] justify-center gap-4 p-4 rounded-md">
        <div className="relative flex justify-center w-full gap-2 mt-4 memorize">
                 <svg
                     onClick={startAudio}
@@ -32,9 +32,9 @@ export const CardInfoBlock = (props: Props) => {
                                 src={props.pronunciationUrl} />
                    </foreignObject>
                 </svg>
-            <p className="text-[#040404]">{props.transcription}</p>
+            <p className="text-[#040404] text-[16px] m-0">{props.transcription}</p>
        </div>
-       <p className="text-[#040404] text-center">
+       <p className="text-[#040404] text-center text-[16px] m-0">
         {props.text ? props.text : "Not found"}
        </p>
     </div>
