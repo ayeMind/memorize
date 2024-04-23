@@ -32,7 +32,7 @@ export const CardPopup = (props: Card) => {
         ? props.context[randomIndex].source
         : "Not found"
     } else {
-      return props.synonyms.map(data => data.synonym) ? props.synonyms.join(", ") : "Not found"
+      return props.synonyms ? props.synonyms.map(data => data.synonym).join(", ") : "Not found"
     }
   }
 
