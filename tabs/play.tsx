@@ -21,7 +21,12 @@ const Play = () => {
     }, []);
 
     if (!showedCards.length) {
-        return null;
+      return(
+      <div
+        className="relative flex items-center justify-center w-screen h-screen bg-fixed bg-no-repeat bg-cover memorize play-page"
+        style={{ backgroundImage: `url(${image}` }}>
+      </div>
+    )
     }
 
     return (
