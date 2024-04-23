@@ -12,8 +12,11 @@ import { getWordTranslation } from "~api/getTranslation"
 import { getWordSynonyms } from "~api/getSynonyms"
 import { NavigateIcons } from "~components/navigate-icons"
 
+interface Props {
+  isFromPage?: boolean
+}
 
-function IndexPopup() {
+function IndexPopup({isFromPage = false}: Props) {
 
   const [value, setValue] = useState("")
   const [pronunciationUrl, setPronunciationUrl] = useState("")
@@ -24,7 +27,7 @@ function IndexPopup() {
   const [contextList, setContextList] = useState([])
   const [synonyms, setSynonums] = useState([])
 
-  const [showPopup, setShowPopup] = useState(false)
+  const [showPopup, setShowPopup] = useState(!isFromPage)
 
   const [showTranslation, setShowTranslation] = useState(false)
 

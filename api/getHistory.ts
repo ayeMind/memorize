@@ -17,7 +17,7 @@ export const getHistory = async () => {
 
   // Проверяем, есть ли строчка с таким user_id в таблице words
   const { data: existingData, error: existingError } = await supabase
-    .from("history")
+    .from("words")
     .select("history")
     .eq("user_id", userId)
 

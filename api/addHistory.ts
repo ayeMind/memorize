@@ -17,7 +17,7 @@ export const addHistory = async (props) => {
 
   // Проверяем, есть ли уже строчка с таким user_id в таблице history
   const { data: existingData, error: existingError } = await supabase
-    .from("history")
+    .from("words")
     .select("history")
     .eq("user_id", userId)
 
@@ -32,7 +32,7 @@ export const addHistory = async (props) => {
     const updatedHistory = [...existingData[0].history, props]
 
     const { data: updateData, error: updateError } = await supabase
-      .from("history")
+      .from("words")
       .update({ history: updatedHistory })
       .eq("user_id", userId)
 
@@ -43,8 +43,8 @@ export const addHistory = async (props) => {
   } else {
     // Если строчки нет
     const { data: insertData, error: insertError } = await supabase
-      .from("history")
-      .insert({ user_id: userId, history: [props] })
+      .from("words")
+      .insert({ user_id: userId, words: [], history: [props] })
 
     if (insertError) {
       console.error("Error inserting new row:", insertError)

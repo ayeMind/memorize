@@ -18,4 +18,5 @@ export interface Card {
     transcription: string;
     pronunciationUrl: string;
     synonyms: Synonym[];
+    nextWords?: Card[];
   }

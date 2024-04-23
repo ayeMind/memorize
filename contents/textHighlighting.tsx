@@ -4,6 +4,8 @@ import { createRoot } from "react-dom/client"
 import { getWord } from "~api/getWord"
 import type { Card } from "~interfaces"
 import { getSettings } from "../api/getSettings"
+import { isShowedCard } from "~utils/isShowedCard"
+import { getShowedCards } from "~utils/getShowedCards"
 
 document.addEventListener("click", (e) => {
   const target = e.target as Node
@@ -77,11 +79,9 @@ getSettings().then(data => {
   document.head.appendChild(styleElement)
 })
 
-
-
-getMyWords().then(data => {
-  (data as string[]).forEach((word) => {
-    highlightWord(word)
+getShowedCards().then(data => {
+  data.forEach((card) => {
+    highlightWord(card.word)
 })
 })
 
