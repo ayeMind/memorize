@@ -211,7 +211,7 @@ function IndexOptions() {
         </div>
       )}
       {user && !user.confirmed_at && (
-        <div className="memorize flex flex-col items-center gap-4 p-8 bg-[#232323] rounded-lg w-[350px]">
+        <div className="memorize fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-4 p-8 bg-[#232323] rounded-lg w-[350px] h-[250px]">
           <h3>
             Please confirm your email to continue. Confirmation mail should be
             sent soon!
@@ -227,7 +227,7 @@ function IndexOptions() {
         </div>
       )}
       {!user && (
-        <div className="memorize flex flex-col items-center gap-4 p-8 bg-[#232323] rounded-lg w-[350px]">
+        <div className="memorize fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-4 p-8 bg-[#232323] rounded-lg w-[350px]">
           <div className="flex flex-col gap-1 memorize">
             <label>Email</label>
             <input
@@ -235,7 +235,7 @@ function IndexOptions() {
               placeholder="Your Username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="input-reset px-2 text-[#232323]"
+              className="input-reset p-2 text-[#232323]"
             />
           </div>
 
@@ -246,7 +246,7 @@ function IndexOptions() {
               placeholder="Your password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="memorize input-reset px-2 text-[#232323]"
+              className="memorize input-reset p-2 text-[#232323]"
             />
           </div>
 
